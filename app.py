@@ -39,6 +39,7 @@ for column in X_train.columns:
     else:  # Numerical columns
         inputs[column] = st.number_input(column, value=0)
 
+test_input=inputs.copy()
 # Encode categorical inputs
 for column in categorical_cols:
     inputs[column] = label_encode_input(column, inputs[column])
@@ -53,7 +54,7 @@ if st.button("Predict"):
     st.write(f"Predicted Processing Time (days): {prediction[0]}")
 
     # Now, generate insights and recommendations using Gemini
-    insights_prompt = f"Based on the following inputs:\n{inputs}\nAnd the predicted processing time of {prediction[0]} days, provide actionable insights and recommendations to improve or optimize this process."
+    insights_prompt = f"Based on the following inputs:\n{test_input}\nAnd the predicted processing time of {prediction[0]} days, provide actionable insights and recommendations to improve or optimize this process."
     
     # Request insights from Gemini
     response = model.generate_content(insights_prompt)
